@@ -1,0 +1,5 @@
+---
+# vars file for dnsmasq
+host_list:
+  - 127.0.0.1 www.nginx-test.org
+  - 127.0.0.1 www.php-test.org

@@ -1,0 +1,8 @@
+---
+- hosts: test
+  gather_facts: no
+  connection: local
+  become: yes
+
+  roles:
+   - dnsmasq

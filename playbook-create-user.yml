@@ -1,0 +1,28 @@
+---
+- hosts: test
+  gather_facts: no
+  connection: local
+  become: yes
+      
+  vars:
+    user_list: 
+    - user2
+    - user3      
+    super_group: sudo
+
+  tasks:
+    - name: Create user and add to sudo group
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        password: "{{ item }}"
+        update_password: on_create
+        groups: "{{ super_group }}"
+        append: yes
+      with_items: "{{ user_list }}"
+
+    - name: Get root privilege
+      command: sudo -i
+      become: yes
+      become_user: user2

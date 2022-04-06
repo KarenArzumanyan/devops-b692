@@ -1,0 +1,10 @@
+---
+# tasks file for dnsmasq
+
+- name: Adding DNS records to Dnsmasq
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ item }}$'
+    line: "{{item}}"
+    state: present
+  with_items: "{{ host_list }}"

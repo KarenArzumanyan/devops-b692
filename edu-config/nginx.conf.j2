@@ -1,0 +1,25 @@
+server {
+  listen 80;
+
+  root {{ document_root }}/{{ app_root }};
+  index index.php index.html index.htm;
+
+  server_name {{ server_name }};
+  
+  location / {
+   default_type "text/html";
+   try_files $uri.html $uri $uri/ =404;
+  }
+  
+  location / {
+      try_files $uri $uri/ /index.php$is_args$args;
+  }
+  
+  location ~ \.php$ {
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass 127.0.0.1:9000;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+  }  
+}
